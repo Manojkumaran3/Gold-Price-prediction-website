@@ -1,0 +1,576 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gold Price Prediction</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --gold-color: #d4af37;
+            --gold-dark: #b7950b;
+            --danger-color: #dc3545;
+            --success-color: #28a745;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .gold-bg {
+            background-color: var(--gold-color);
+        }
+        
+        .gold-text {
+            color: var(--gold-color);
+        }
+        
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            margin-bottom: 20px;
+            border: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        }
+        
+        .card-header {
+            background-color: var(--gold-color);
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+            font-weight: bold;
+            border: none;
+            padding: 1.25rem;
+        }
+        
+        .btn-gold {
+            background-color: var(--gold-color);
+            color: white;
+            font-weight: bold;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-gold:hover {
+            background-color: var(--gold-dark);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .price-display {
+            font-size: 2.25rem;
+            font-weight: bold;
+            color: var(--gold-color);
+        }
+        
+        .prediction-result {
+            min-height: 180px;
+            border: 2px dashed var(--gold-color);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 20px;
+            background-color: #fffdf6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .feature-icon {
+            font-size: 1.5rem;
+            color: var(--gold-color);
+            margin-right: 10px;
+        }
+        
+        .trend-indicator {
+            font-weight: bold;
+        }
+        
+        .trend-up {
+            color: var(--success-color);
+        }
+        
+        .trend-down {
+            color: var(--danger-color);
+        }
+        
+        .trend-neutral {
+            color: #6c757d;
+        }
+        
+        .loading-spinner {
+            color: var(--gold-color);
+            width: 3rem;
+            height: 3rem;
+            border-width: 0.25em;
+        }
+        
+        .market-data-value {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .prediction-card {
+            min-height: 500px;
+        }
+        
+        .last-updated {
+            font-size: 0.8rem;
+            color: #6c757d;
+            text-align: right;
+            margin-top: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .price-display {
+                font-size: 1.8rem;
+            }
+            
+            .card-header {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-4 py-lg-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h2 class="mb-1"><i class="fas fa-coins me-2"></i>Gold Price Prediction</h2>
+                        <p class="mb-0 opacity-75">Advanced forecasting using N-BEATS and Prophet algorithms</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card h-100">
+                                    <div class="card-header">
+                                        <i class="fas fa-cog feature-icon"></i>Prediction Parameters
+                                    </div>
+                                    <div class="card-body">
+                                        <form id="predictionForm">
+                                            <div class="mb-4">
+                                                <label for="predictionDate" class="form-label fw-bold">Prediction Date</label>
+                                                <input type="date" class="form-control form-control-lg" id="predictionDate" required>
+                                            </div>
+                                            
+                                            <div class="mb-4">
+                                                <label class="form-label fw-bold">Current Gold Price (USD/oz)</label>
+                                                <div class="price-display my-2" id="currentPrice">
+                                                    <div class="spinner-border spinner-border-sm" role="status">
+                                                        <span class="visually-hidden">Loading...</span>
+                                                    </div>
+                                                    Loading...
+                                                </div>
+                                                <div class="last-updated" id="lastUpdated"></div>
+                                            </div>
+                                            
+                                            <div class="card mb-3">
+                                                <div class="card-body">
+                                                    <h5 class="card-title"><i class="fas fa-chart-line feature-icon"></i>Market Indicators</h5>
+                                                    <div class="row">
+                                                        <div class="col-md-6 mb-3">
+                                                            <label class="form-label">Oil Price (USD/barrel)</label>
+                                                            <div class="market-data-value" id="oilPrice">Loading...</div>
+                                                        </div>
+                                                        <div class="col-md-6 mb-3">
+                                                            <label class="form-label">USD/INR Rate</label>
+                                                            <div class="market-data-value" id="usdInrRate">Loading...</div>
+                                                        </div>
+                                                        <div class="col-md-6 mb-3">
+                                                            <label class="form-label">S&P 500 Index</label>
+                                                            <div class="market-data-value" id="sp500">Loading...</div>
+                                                        </div>
+                                                        <div class="col-md-6 mb-3">
+                                                            <label class="form-label">10-Year Treasury Yield</label>
+                                                            <div class="market-data-value" id="treasuryYield">Loading...</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <button type="submit" class="btn btn-gold w-100 py-3 mt-2">
+                                                <i class="fas fa-chart-line me-2"></i>Get Prediction
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="card h-100 prediction-card">
+                                    <div class="card-header">
+                                        <i class="fas fa-chart-bar feature-icon"></i>Prediction Results
+                                    </div>
+                                    <div class="card-body d-flex flex-column">
+                                        <div class="prediction-result text-center" id="predictionResult">
+                                            <div>
+                                                <i class="fas fa-search-dollar fa-3x mb-3 gold-text"></i>
+                                                <p class="mb-0">Submit the form to get a gold price prediction</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mt-auto">
+                                            <h5 class="mt-4"><i class="fas fa-history feature-icon"></i>Historical Trends</h5>
+                                            <div class="table-responsive">
+                                                <table class="table table-hover align-middle">
+                                                    <thead class="table-light">
+                                                        <tr>
+                                                            <th>Period</th>
+                                                            <th>Price Change</th>
+                                                            <th>Percentage</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="trendTable">
+                                                        <tr>
+                                                            <td>Daily</td>
+                                                            <td>
+                                                                <div class="spinner-border spinner-border-sm text-secondary" role="status">
+                                                                    <span class="visually-hidden">Loading...</span>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="spinner-border spinner-border-sm text-secondary" role="status">
+                                                                    <span class="visually-hidden">Loading...</span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Weekly</td>
+                                                            <td>
+                                                                <div class="spinner-border spinner-border-sm text-secondary" role="status">
+                                                                    <span class="visually-hidden">Loading...</span>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="spinner-border spinner-border-sm text-secondary" role="status">
+                                                                    <span class="visually-hidden">Loading...</span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Monthly</td>
+                                                            <td>
+                                                                <div class="spinner-border spinner-border-sm text-secondary" role="status">
+                                                                    <span class="visually-hidden">Loading...</span>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="spinner-border spinner-border-sm text-secondary" role="status">
+                                                                    <span class="visually-hidden">Loading...</span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-3 text-muted">
+                    <small>Data updates every 5 minutes. Predictions are based on historical trends and may vary.</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Set default date to today
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date();
+            const todayFormatted = today.toISOString().split('T')[0];
+            document.getElementById('predictionDate').value = todayFormatted;
+            document.getElementById('predictionDate').min = todayFormatted;
+            
+            // Set max date to 1 year from today
+            const maxDate = new Date();
+            maxDate.setFullYear(today.getFullYear() + 1);
+            document.getElementById('predictionDate').max = maxDate.toISOString().split('T')[0];
+            
+            // Load current market data
+            loadMarketData();
+            
+            // Form submission
+            document.getElementById('predictionForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                getPrediction();
+            });
+            
+            // Refresh data every 5 minutes
+            setInterval(loadMarketData, 300000);
+        });
+        
+        function updateLastUpdatedTime() {
+            const now = new Date();
+            document.getElementById('lastUpdated').textContent = `Last updated: ${now.toLocaleTimeString()}`;
+        }
+        
+        function loadMarketData() {
+            // Show loading states
+            document.getElementById('currentPrice').innerHTML = `
+                <div class="spinner-border spinner-border-sm" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                Loading...
+            `;
+            
+            // Set loading states for market indicators
+            document.querySelectorAll('.market-data-value').forEach(el => {
+                el.innerHTML = `
+                    <div class="spinner-border spinner-border-sm text-secondary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                `;
+            });
+            
+            // Set loading states for trends table
+            document.querySelectorAll('#trendTable td:nth-child(2), #trendTable td:nth-child(3)').forEach(td => {
+                td.innerHTML = `
+                    <div class="spinner-border spinner-border-sm text-secondary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                `;
+            });
+            
+            fetch('/api/market-data/')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Update current price
+                    document.getElementById('currentPrice').innerHTML = `$${data.gold_price.toFixed(2)}`;
+                    
+                    // Update other market indicators
+                    document.getElementById('oilPrice').textContent = data.oil_price !== "N/A" ? `$${parseFloat(data.oil_price).toFixed(2)}` : "N/A";
+                    document.getElementById('usdInrRate').textContent = data.usd_inr !== "N/A" ? parseFloat(data.usd_inr).toFixed(2) : "N/A";
+                    document.getElementById('sp500').textContent = data.sp500 !== "N/A" ? parseFloat(data.sp500).toFixed(2) : "N/A";
+                    document.getElementById('treasuryYield').textContent = data.treasury_yield !== "N/A" ? `${(parseFloat(data.treasury_yield) * 100).toFixed(2)}%` : "N/A";
+                    
+                    // Update trends table with colored indicators
+                    updateTrendTable(data);
+                    
+                    // Update last updated time
+                    updateLastUpdatedTime();
+                })
+                .catch(error => {
+                    console.error('Error fetching market data:', error);
+                    document.getElementById('currentPrice').innerHTML = `
+                        <span class="text-danger">Error loading data</span>
+                    `;
+                    
+                    document.querySelectorAll('.market-data-value').forEach(el => {
+                        el.textContent = "N/A";
+                    });
+                    
+                    document.getElementById('trendTable').innerHTML = `
+                        <tr>
+                            <td colspan="3" class="text-center text-danger">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                Failed to load trend data
+                            </td>
+                        </tr>
+                    `;
+                });
+        }
+        
+        function updateTrendTable(data) {
+            const trendTable = document.getElementById('trendTable');
+            
+            const dailyChangeClass = data.daily_change >= 0 ? 'trend-up' : 'trend-down';
+            const weeklyChangeClass = data.weekly_change >= 0 ? 'trend-up' : 'trend-down';
+            const monthlyChangeClass = data.monthly_change >= 0 ? 'trend-up' : 'trend-down';
+            
+            trendTable.innerHTML = `
+                <tr>
+                    <td>Daily</td>
+                    <td class="trend-indicator ${dailyChangeClass}">
+                        $${Math.abs(data.daily_change).toFixed(2)}
+                        ${data.daily_change >= 0 ? '<i class="fas fa-caret-up ms-1"></i>' : '<i class="fas fa-caret-down ms-1"></i>'}
+                    </td>
+                    <td class="trend-indicator ${dailyChangeClass}">
+                        ${data.daily_pct >= 0 ? '+' : ''}${data.daily_pct.toFixed(2)}%
+                    </td>
+                </tr>
+                <tr>
+                    <td>Weekly</td>
+                    <td class="trend-indicator ${weeklyChangeClass}">
+                        $${Math.abs(data.weekly_change).toFixed(2)}
+                        ${data.weekly_change >= 0 ? '<i class="fas fa-caret-up ms-1"></i>' : '<i class="fas fa-caret-down ms-1"></i>'}
+                    </td>
+                    <td class="trend-indicator ${weeklyChangeClass}">
+                        ${data.weekly_pct >= 0 ? '+' : ''}${data.weekly_pct.toFixed(2)}%
+                    </td>
+                </tr>
+                <tr>
+                    <td>Monthly</td>
+                    <td class="trend-indicator ${monthlyChangeClass}">
+                        $${Math.abs(data.monthly_change).toFixed(2)}
+                        ${data.monthly_change >= 0 ? '<i class="fas fa-caret-up ms-1"></i>' : '<i class="fas fa-caret-down ms-1"></i>'}
+                    </td>
+                    <td class="trend-indicator ${monthlyChangeClass}">
+                        ${data.monthly_pct >= 0 ? '+' : ''}${data.monthly_pct.toFixed(2)}%
+                    </td>
+                </tr>
+            `;
+        }
+        
+        function getPrediction() {
+            const predictionDate = document.getElementById('predictionDate').value;
+            const resultDiv = document.getElementById('predictionResult');
+            
+            resultDiv.innerHTML = `
+                <div class="text-center">
+                    <div class="loading-spinner spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-3">Generating prediction for ${predictionDate}...</p>
+                    <small class="text-muted">This may take a few moments</small>
+                </div>
+            `;
+            
+            fetch('/api/predict/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken'),
+                },
+                body: JSON.stringify({
+                    prediction_date: predictionDate
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => { throw err; });
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                
+                const predictionDateFormatted = new Date(data.prediction_date).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                
+                resultDiv.innerHTML = `
+                    <div class="text-center">
+                        <h4>Prediction for ${predictionDateFormatted}</h4>
+                        <div class="price-display my-3">$${data.prediction.toFixed(2)}</div>
+                        
+                        <div class="d-flex justify-content-center gap-3 mb-3">
+                            <span class="badge bg-success bg-opacity-10 text-success">
+                                <i class="fas fa-brain me-1"></i> N-BEATS
+                            </span>
+                            <span class="badge bg-primary bg-opacity-10 text-primary">
+                                <i class="fas fa-chart-line me-1"></i> Prophet
+                            </span>
+                        </div>
+                        
+                        <div class="mt-3">
+                            <button class="btn btn-sm btn-outline-secondary" onclick="savePrediction('${data.prediction_date}', ${data.prediction.toFixed(2)})">
+                                <i class="fas fa-bookmark me-1"></i>Save Prediction
+                            </button>
+                        </div>
+                    </div>
+                `;
+            })
+            .catch(error => {
+                console.error('Prediction error:', error);
+                
+                let errorMessage = error.message || 'Error generating prediction. Please try again later.';
+                if (errorMessage.includes('failed') || errorMessage.includes('error')) {
+                    errorMessage = 'Prediction service is currently unavailable. Please try again later.';
+                }
+                
+                resultDiv.innerHTML = `
+                    <div class="alert alert-danger">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-exclamation-triangle me-3 fs-4"></i>
+                            <div>
+                                <h5 class="alert-heading mb-1">Prediction Failed</h5>
+                                <p class="mb-0">${errorMessage}</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-3">
+                        <button class="btn btn-sm btn-gold" onclick="getPrediction()">
+                            <i class="fas fa-sync-alt me-1"></i> Try Again
+                        </button>
+                    </div>
+                `;
+            });
+        }
+        
+        function savePrediction(date, price) {
+            // In a real implementation, this would save to your backend
+            const dateFormatted = new Date(date).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            // Show toast notification
+            const toast = document.createElement('div');
+            toast.className = 'position-fixed bottom-0 end-0 p-3';
+            toast.style.zIndex = '11';
+            toast.innerHTML = `
+                <div id="liveToast" class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header bg-success text-white">
+                        <strong class="me-auto">Prediction Saved</strong>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        Prediction for ${dateFormatted} saved: <strong>$${price.toFixed(2)}</strong>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(toast);
+            
+            // Remove toast after 5 seconds
+            setTimeout(() => {
+                toast.remove();
+            }, 5000);
+        }
+        
+        // Helper function to get CSRF token
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+</body>
+</html>
+{%endblock%}

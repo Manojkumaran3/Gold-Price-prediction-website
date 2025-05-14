@@ -1,0 +1,446 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero_section">
+  <div class="hero_bg_box">
+    <!--img src="{% static 'images/hero-bg-gold.jpg' %}" alt=""-->
+  </div>
+  <div class="container">
+    <div class="hero_content">
+      <h1>PRECISE GOLD PRICE PREDICTIONS</h1>
+      <p class="hero_subtitle">Advanced AI-powered forecasting for smarter investment decisions</p>
+      <div class="hero_btns">
+        <!--a href="#" class="btn-gold">Try Predictor</a-->
+        <a href="{% url 'about' %}" class="btn-outline">Learn More</a>
+        <a href="{% url 'pred' %}" class="btn-outline">Make Predictions</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="feature_section layout_padding">
+  <div class="container">
+    <div class="heading_container heading_center">
+      <h2>OUR SERVICES</h2>
+      <p class="subtitle">Comprehensive gold market solutions</p>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-4">
+        <div class="feature_box">
+          <div class="feature_icon">
+            <i class="fa fa-chart-line"></i>
+          </div>
+          <h4>Real-Time Analytics</h4>
+          <p>Advanced market analytics with live gold price tracking and historical trends visualization.</p>
+        </div>
+      </div>
+      
+      <div class="col-md-4">
+        <div class="feature_box">
+          <div class="feature_icon">
+            <i class="fa fa-robot"></i>
+          </div>
+          <h4>AI Prediction</h4>
+          <p>Machine learning models trained on decades of market data for accurate price forecasting.</p>
+        </div>
+      </div>
+      
+      <div class="col-md-4">
+        <div class="feature_box">
+          <div class="feature_icon">
+            <i class="fa fa-user-tie"></i>
+          </div>
+          <h4>Expert Consultation</h4>
+          <p>Personalized investment advice from our team of gold market specialists.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Live Price Section -->
+<section class="price_section layout_padding-bottom">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="price_content">
+          <h2>LIVE GOLD PRICE</h2>
+          <div class="price_display">
+            <span class="currency">$</span>
+            <span class="price" id="liveGoldPrice">1,850.75</span>
+            <span class="per-unit">/oz</span>
+          </div>
+          <div class="price_change">
+            <span class="change-amount positive">+12.40 (0.67%)</span>
+            <span class="change-time">Today, 3:45 PM EST</span>
+          </div>
+          <a href="{% url 'pred' %}" class="btn-gold">Predict Future Price</a>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="price_chart">
+          <canvas id="livePriceChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="how_section layout_padding">
+  <div class="container">
+    <div class="heading_container heading_center">
+      <h2>HOW IT WORKS</h2>
+      <p class="subtitle">Our prediction process in three simple steps</p>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-4">
+        <div class="step_box">
+          <div class="step_number">1</div>
+          <h4>Data Collection</h4>
+          <p>We gather real-time market data from global exchanges and economic indicators.</p>
+        </div>
+      </div>
+      
+      <div class="col-md-4">
+        <div class="step_box">
+          <div class="step_number">2</div>
+          <h4>AI Analysis</h4>
+          <p>Our algorithms process the data using advanced machine learning techniques.</p>
+        </div>
+      </div>
+      
+      <div class="col-md-4">
+        <div class="step_box">
+          <div class="step_number">3</div>
+          <h4>Price Forecast</h4>
+          <p>Get accurate predictions with confidence intervals for your investment planning.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta_section">
+  <div class="container">
+    <div class="cta_content">
+      <h2>Ready to Make Smarter Gold Investments?</h2>
+      <p>Start using our prediction tools today or consult with our experts</p>
+      <div class="cta_btns">
+        <a href="{% url 'login' %}" class="btn-gold">Get Started</a>
+        <a href="{% url 'contact' %}" class="btn-outline">Contact Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // Initialize live price chart
+  document.addEventListener('DOMContentLoaded', function() {
+    const ctx = document.getElementById('livePriceChart').getContext('2d');
+    const chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00'],
+        datasets: [{
+          label: 'Gold Price (USD/oz)',
+          data: [1842.35, 1845.20, 1848.75, 1850.10, 1851.45, 1850.75, 1852.15],
+          borderColor: '#FFC107',
+          backgroundColor: 'rgba(255, 193, 7, 0.1)',
+          borderWidth: 2,
+          tension: 0.1,
+          fill: true
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: false
+          }
+        }
+      }
+    });
+
+    // Simulate live price updates (replace with real API calls)
+    setInterval(() => {
+      const currentPrice = parseFloat(document.getElementById('liveGoldPrice').textContent.replace(/,/g, ''));
+      const change = (Math.random() * 2 - 1) * 0.2;
+      const newPrice = currentPrice + change;
+      
+      document.getElementById('liveGoldPrice').textContent = newPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      
+      const changeElement = document.querySelector('.change-amount');
+      changeElement.textContent = `${change >= 0 ? '+' : ''}${change.toFixed(2)} (${(change/currentPrice*100).toFixed(2)}%)`;
+      changeElement.classList.toggle('positive', change >= 0);
+      changeElement.classList.toggle('negative', change < 0);
+      
+      // Update chart
+      chart.data.labels.push(new Date().getHours() + ':' + new Date().getMinutes());
+      if (chart.data.labels.length > 7) chart.data.labels.shift();
+      
+      chart.data.datasets[0].data.push(newPrice);
+      if (chart.data.datasets[0].data.length > 7) chart.data.datasets[0].data.shift();
+      
+      chart.update();
+    }, 5000);
+  });
+</script>
+
+<style>
+  /* Hero Section */
+  .hero_section {
+    position: relative;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    color: rgb(0, 0, 0);
+  }
+  
+  .hero_bg_box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+ 
+  }
+  
+  .hero_bg_box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.6);
+  }
+  
+  .hero_content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .hero_content h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  }
+  
+  .hero_subtitle {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  }
+  
+  .hero_btns {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    color:rgb(7, 8, 7);
+  }
+  
+  /* Buttons */
+  .btn-gold {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: #FFC107;
+    color:rgb(0, 0, 0);
+    border: none;
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
+  }
+  
+  .btn-gold:hover {
+    background-color: #E0A800;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4);
+    color:rgb(6, 6, 1);
+  }
+  
+  .btn-outline {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: transparent;
+    color: rgb(14, 3, 3);
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+  
+  .btn-outline:hover {
+    background-color: rgba(255,255,255,0.1);
+    transform: translateY(-2px);
+  }
+  
+  /* Sections */
+  .layout_padding {
+    padding: 80px 0;
+  }
+  
+  .layout_padding-bottom {
+    padding-bottom: 80px;
+  }
+  
+  /* Feature Boxes */
+  .feature_box {
+    text-align: center;
+    padding: 30px 20px;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    height: 100%;
+    transition: all 0.3s;
+  }
+  
+  .feature_box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+  }
+  
+  .feature_icon {
+    font-size: 2.5rem;
+    color: #FFC107;
+    margin-bottom: 1rem;
+  }
+  
+  .feature_box h4 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+  }
+  
+  .feature_box p {
+    color: #7f8c8d;
+  }
+  
+  /* Price Display */
+  .price_display {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #FFC107;
+    margin: 1rem 0;
+  }
+  
+  .price_display .currency {
+    vertical-align: top;
+    font-size: 2rem;
+  }
+  
+  .price_display .per-unit {
+    font-size: 1rem;
+    color: #7f8c8d;
+    font-weight: normal;
+  }
+  
+  .price_change {
+    margin-bottom: 2rem;
+  }
+  
+  .change-amount {
+    font-weight: 600;
+    margin-right: 1rem;
+  }
+  
+  .positive {
+    color: #27ae60;
+  }
+  
+  .negative {
+    color:rgb(0, 0, 0);
+  }
+  
+  .change-time {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+  }
+  
+  /* How It Works */
+  .step_box {
+    text-align: center;
+    position: relative;
+    padding-top: 60px;
+  }
+  
+  .step_number {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 50px;
+    background: #FFC107;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+  
+  /* CTA Section */
+  .cta_section {
+    background: #2c3e50;
+    color: white;
+    padding: 60px 0;
+    text-align: center;
+  }
+  
+  .cta_content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .cta_content p {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+  }
+  
+  .cta_btns {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .hero_content h1 {
+      font-size: 2.5rem;
+    }
+    
+    .hero_btns, .cta_btns {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .price_section .row {
+      flex-direction: column-reverse;
+    }
+    
+    .price_content {
+      text-align: center;
+      margin-top: 2rem;
+    }
+  }
+</style>
+{% endblock %}

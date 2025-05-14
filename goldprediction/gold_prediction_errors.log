@@ -1,0 +1,380 @@
+Internal Server Error: /api/market-data/
+Traceback (most recent call last):
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 30, in wrapper
+    return f(*args, **kwargs)
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 177, in get_current_market_data
+    gold_data = get_yfinance_data("GC=F", "1mo")
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 161, in get_yfinance_data
+    data = yf.Ticker(ticker, timeout=YFINANCE_TIMEOUT).history(
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Ticker.__init__() got an unexpected keyword argument 'timeout'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 30, in wrapper
+    return f(*args, **kwargs)
+  File "C:\Users\manoj\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 225, in market_data
+    data = get_current_market_data()
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 31, in wrapper
+    except yf.YFinanceError as e:
+           ^^^^^^^^^^^^^^^^
+AttributeError: module 'yfinance' has no attribute 'YFinanceError'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\manoj\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\manoj\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 31, in wrapper
+    except yf.YFinanceError as e:
+           ^^^^^^^^^^^^^^^^
+AttributeError: module 'yfinance' has no attribute 'YFinanceError'
+"GET /api/market-data/ HTTP/1.1" 500 95568
+Internal Server Error: /api/market-data/
+Traceback (most recent call last):
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 30, in wrapper
+    return f(*args, **kwargs)
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 177, in get_current_market_data
+    gold_data = get_yfinance_data("GC=F", "1mo")
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 161, in get_yfinance_data
+    data = yf.Ticker(ticker, timeout=YFINANCE_TIMEOUT).history(
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Ticker.__init__() got an unexpected keyword argument 'timeout'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 30, in wrapper
+    return f(*args, **kwargs)
+  File "C:\Users\manoj\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 225, in market_data
+    data = get_current_market_data()
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 31, in wrapper
+    except yf.YFinanceError as e:
+           ^^^^^^^^^^^^^^^^
+AttributeError: module 'yfinance' has no attribute 'YFinanceError'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\manoj\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\manoj\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 31, in wrapper
+    except yf.YFinanceError as e:
+           ^^^^^^^^^^^^^^^^
+AttributeError: module 'yfinance' has no attribute 'YFinanceError'
+"GET /api/market-data/ HTTP/1.1" 500 95566
+Internal Server Error: /api/market-data/
+Traceback (most recent call last):
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 30, in wrapper
+    return f(*args, **kwargs)
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 177, in get_current_market_data
+    gold_data = get_yfinance_data("GC=F", "1mo")
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 161, in get_yfinance_data
+    data = yf.Ticker(ticker, timeout=YFINANCE_TIMEOUT).history(
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Ticker.__init__() got an unexpected keyword argument 'timeout'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 30, in wrapper
+    return f(*args, **kwargs)
+  File "C:\Users\manoj\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 225, in market_data
+    data = get_current_market_data()
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 31, in wrapper
+    except yf.YFinanceError as e:
+           ^^^^^^^^^^^^^^^^
+AttributeError: module 'yfinance' has no attribute 'YFinanceError'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\manoj\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\manoj\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 31, in wrapper
+    except yf.YFinanceError as e:
+           ^^^^^^^^^^^^^^^^
+AttributeError: module 'yfinance' has no attribute 'YFinanceError'
+"GET /api/market-data/ HTTP/1.1" 500 95568
+Internal Server Error: /api/market-data/
+Traceback (most recent call last):
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 30, in wrapper
+    return f(*args, **kwargs)
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 177, in get_current_market_data
+    gold_data = get_yfinance_data("GC=F", "1mo")
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 161, in get_yfinance_data
+    data = yf.Ticker(ticker, timeout=YFINANCE_TIMEOUT).history(
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Ticker.__init__() got an unexpected keyword argument 'timeout'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 30, in wrapper
+    return f(*args, **kwargs)
+  File "C:\Users\manoj\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 225, in market_data
+    data = get_current_market_data()
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 31, in wrapper
+    except yf.YFinanceError as e:
+           ^^^^^^^^^^^^^^^^
+AttributeError: module 'yfinance' has no attribute 'YFinanceError'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\manoj\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\manoj\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 31, in wrapper
+    except yf.YFinanceError as e:
+           ^^^^^^^^^^^^^^^^
+AttributeError: module 'yfinance' has no attribute 'YFinanceError'
+"GET /api/market-data/ HTTP/1.1" 500 95568
+Internal Server Error: /api/predict/
+Traceback (most recent call last):
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 30, in wrapper
+    return f(*args, **kwargs)
+  File "C:\Users\manoj\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\manoj\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 241, in predict
+    raise ValueError("Prediction date must be in the future")
+ValueError: Prediction date must be in the future
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\manoj\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\manoj\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 31, in wrapper
+    except yf.YFinanceError as e:
+           ^^^^^^^^^^^^^^^^
+AttributeError: module 'yfinance' has no attribute 'YFinanceError'
+"POST /api/predict/ HTTP/1.1" 500 84360
+Internal Server Error: /api/predict/
+Traceback (most recent call last):
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 30, in wrapper
+    return f(*args, **kwargs)
+  File "C:\Users\manoj\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\manoj\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 252, in predict
+    hist_data = get_yfinance_data("GC=F", "5y")
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 161, in get_yfinance_data
+    data = yf.Ticker(ticker, timeout=YFINANCE_TIMEOUT).history(
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Ticker.__init__() got an unexpected keyword argument 'timeout'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\manoj\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\manoj\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 31, in wrapper
+    except yf.YFinanceError as e:
+           ^^^^^^^^^^^^^^^^
+AttributeError: module 'yfinance' has no attribute 'YFinanceError'
+"POST /api/predict/ HTTP/1.1" 500 88601
+Internal Server Error: /api/market-data/
+Traceback (most recent call last):
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 30, in wrapper
+    return f(*args, **kwargs)
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 177, in get_current_market_data
+    gold_data = get_yfinance_data("GC=F", "1mo")
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 161, in get_yfinance_data
+    data = yf.Ticker(ticker, timeout=YFINANCE_TIMEOUT).history(
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Ticker.__init__() got an unexpected keyword argument 'timeout'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 30, in wrapper
+    return f(*args, **kwargs)
+  File "C:\Users\manoj\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 225, in market_data
+    data = get_current_market_data()
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 31, in wrapper
+    except yf.YFinanceError as e:
+           ^^^^^^^^^^^^^^^^
+AttributeError: module 'yfinance' has no attribute 'YFinanceError'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\manoj\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\manoj\AppData\Local\Programs\Python\Python313\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\manoj\final\goldprediction\predictor\views.py", line 31, in wrapper
+    except yf.YFinanceError as e:
+           ^^^^^^^^^^^^^^^^
+AttributeError: module 'yfinance' has no attribute 'YFinanceError'
+"GET /api/market-data/ HTTP/1.1" 500 95568
+Service Unavailable: /api/market-data/
+"GET /api/market-data/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/market-data/
+"GET /api/market-data/ HTTP/1.1" 503 88
+Service Unavailable: /api/market-data/
+"GET /api/market-data/ HTTP/1.1" 503 88
+Service Unavailable: /api/market-data/
+"GET /api/market-data/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/market-data/
+"GET /api/market-data/ HTTP/1.1" 503 88
+Service Unavailable: /api/market-data/
+"GET /api/market-data/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/market-data/
+"GET /api/market-data/ HTTP/1.1" 503 88
+Service Unavailable: /api/market-data/
+"GET /api/market-data/ HTTP/1.1" 503 88
+Service Unavailable: /api/market-data/
+"GET /api/market-data/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/market-data/
+"GET /api/market-data/ HTTP/1.1" 503 88
+Internal Server Error: /api/predict/
+"POST /api/predict/ HTTP/1.1" 500 115
+Internal Server Error: /api/predict/
+"POST /api/predict/ HTTP/1.1" 500 78
+Internal Server Error: /api/predict/
+"POST /api/predict/ HTTP/1.1" 500 138
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/market-data/
+"GET /api/market-data/ HTTP/1.1" 503 88
+Service Unavailable: /api/market-data/
+"GET /api/market-data/ HTTP/1.1" 503 88
+Service Unavailable: /api/predict/
+"POST /api/predict/ HTTP/1.1" 503 88
+Service Unavailable: /api/market-data/
+"GET /api/market-data/ HTTP/1.1" 503 88
+Service Unavailable: /api/market-data/
+"GET /api/market-data/ HTTP/1.1" 503 88

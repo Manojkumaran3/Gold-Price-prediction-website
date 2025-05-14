@@ -1,0 +1,158 @@
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PREDICXO - Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-image: url("https://images.unsplash.com/photo-1580630405970-59f9c52f2fae"); /* You can replace this with your preferred image URL or a local path */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .intro-text {
+            text-align: center;
+            padding: 40px 20px 0 20px;
+            color:  #e74c3c;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+        }
+
+        .intro-text h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .intro-text p {
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .login-container {
+            max-width: 500px;
+            margin: 40px auto;
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header h2 {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .login-header p {
+            color: #7f8c8d;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #e74c3c;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #e74c3c;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #e74c3c;;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .login-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .login-footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #7f8c8d;
+        }
+
+        .login-footer a {
+            color: #e74c3c;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="intro-text">
+        <h1>Welcome to GOLDPULSE</h1>
+        <p>Gain powerful insights and accurate predictions on gold prices using cutting-edge AI and data-driven models. Log in to access real-time forecasts, charts, and more.</p>
+    </div>
+
+    <div class="login-container">
+        <div class="login-header">
+            <h2>Login</h2>
+            <p>Sign in to your account</p>
+        </div>
+        
+        <form method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+        
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+        
+            <button type="submit" class="login-btn">LOGIN</button>
+        </form>
+        <div class="login-footer">
+            <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}

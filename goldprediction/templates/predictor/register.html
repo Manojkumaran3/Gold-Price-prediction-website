@@ -1,0 +1,246 @@
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PREDICXO - Register</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .register-container {
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 40px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .register-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .register-header h2 {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .register-header p {
+            color: #7f8c8d;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #e74c3c;
+        }
+
+        .register-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .register-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #7f8c8d;
+        }
+        
+        .login-link a {
+            color: #e74c3c;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .password-strength {
+            font-size: 12px;
+            color: #e74c3c;
+            margin-top: 5px;
+        }
+
+        .strength-bar {
+            height: 5px;
+            background-color: #ddd;
+            border-radius: 3px;
+            margin-top: 5px;
+        }
+
+        .strength-bar span {
+            display: block;
+            height: 100%;
+            border-radius: 3px;
+        }
+
+        .strength-bar.weak span {
+            background-color: #e74c3c;
+            width: 33%;
+        }
+
+        .strength-bar.medium span {
+            background-color: #f39c12;
+            width: 66%;
+        }
+
+        .strength-bar.strong span {
+            background-color: #2ecc71;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="register-container">
+        <div class="register-header">
+            <h2>Create Your GOLDPULSE Account</h2>
+            <p>Get started with gold price predictions and investment insights</p>
+        </div>
+
+        <form method="POST" action="{% url 'register' %}" id="register-form">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="first-name">First Name</label>
+                    <input type="text" id="first-name" name="first_name" placeholder="Enter your first name" required>
+                </div>
+        
+                <div class="form-group">
+                    <label for="last-name">Last Name</label>
+                    <input type="text" id="last-name" name="last_name" placeholder="Enter your last name" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+        
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Create a password" required>
+                    <div class="password-strength" id="password-strength-text"></div>
+                    <div class="strength-bar" id="strength-bar">
+                        <span></span>
+                    </div>
+                </div>
+        
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" name="confirm_password" placeholder="Confirm your password" required>
+                </div>
+            </div>
+        
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number">
+            </div>
+        
+            <div class="terms">
+                <input type="checkbox" id="terms" required>
+                <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+            </div>
+        
+            <button type="submit" class="register-btn">Create Account</button>
+        </form>
+
+        <div class="login-link">
+            <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Password strength check
+        const passwordInput = document.getElementById("password");
+        const strengthBar = document.getElementById("strength-bar");
+        const strengthText = document.getElementById("password-strength-text");
+        
+        passwordInput.addEventListener("input", function() {
+            const passwordValue = passwordInput.value;
+            const strength = getPasswordStrength(passwordValue);
+
+            if (strength === "weak") {
+                strengthBar.className = "strength-bar weak";
+                strengthText.textContent = "Weak password. Try using a mix of letters, numbers, and symbols.";
+            } else if (strength === "medium") {
+                strengthBar.className = "strength-bar medium";
+                strengthText.textContent = "Medium password. Consider adding more complexity.";
+            } else if (strength === "strong") {
+                strengthBar.className = "strength-bar strong";
+                strengthText.textContent = "Strong password!";
+            }
+        });
+
+        function getPasswordStrength(password) {
+            const regexWeak = /^[a-zA-Z0-9]{6,}$/;
+            const regexMedium = /^(?=.*[a-zA-Z])(?=.*\d).{6,}$/;
+            const regexStrong = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+={}\[\];:'"<>,.?/\\|`~]).{8,}$/;
+
+            if (regexStrong.test(password)) {
+                return "strong";
+            } else if (regexMedium.test(password)) {
+                return "medium";
+            } else if (regexWeak.test(password)) {
+                return "weak";
+            } else {
+                return "none";
+            }
+        }
+    </script>
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<!-- Contact Section -->
+<section class="contact_section">
+  <div class="container-fluid">
+
+    <!-- Alert Messages -->
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show mt-3 mx-3" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    <div class="row">
+      <!-- Image Box -->
+      <div class="col-md-6 px-0">
+        <div class="img-box">
+          <img src="{% static 'contact-img.jpg' %}" class="img-fluid" alt="Contact Image">
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="col-md-5 mx-auto">
+        <div class="form_container py-4">
+          <div class="heading_container heading_center mb-4">
+            <h2>Get In Touch</h2>
+          </div>
+
+          <form method="post" novalidate>
+            {% csrf_token %}
+
+            <div class="form-group mb-3">
+              <label for="id_name">Name</label>
+              <input type="text" class="form-control" id="id_name" name="name" value="{{ form.name.value|default:'' }}">
+              {% for error in form.name.errors %}
+                <div class="text-danger small">{{ error }}</div>
+              {% endfor %}
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="id_phone">Phone Number</label>
+                <input type="text" class="form-control" id="id_phone" name="phone" value="{{ form.phone.value|default:'' }}">
+                {% for error in form.phone.errors %}
+                  <div class="text-danger small">{{ error }}</div>
+                {% endfor %}
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="id_service">Select Service</label>
+                <select class="form-control" id="id_service" name="service">
+                  <option value="">Select Service</option>
+                  <option value="Service 1" {% if form.service.value == "Service 1" %}selected{% endif %}>Real-Time Analytics</option>
+                  <option value="Service 2" {% if form.service.value == "Service 2" %}selected{% endif %}>AI Prediction</option>
+                  <option value="Service 3" {% if form.service.value == "Service 3" %}selected{% endif %}>Expert Consultation</option>
+                </select>
+                {% for error in form.service.errors %}
+                  <div class="text-danger small">{{ error }}</div>
+                {% endfor %}
+              </div>
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="id_email">Email</label>
+              <input type="email" class="form-control" id="id_email" name="email" value="{{ form.email.value|default:'' }}">
+              {% for error in form.email.errors %}
+                <div class="text-danger small">{{ error }}</div>
+              {% endfor %}
+            </div>
+
+            <div class="form-group mb-4">
+              <label for="id_message">Message</label>
+              <textarea class="form-control" id="id_message" name="message" rows="4">{{ form.message.value|default:'' }}</textarea>
+              {% for error in form.message.errors %}
+                <div class="text-danger small">{{ error }}</div>
+              {% endfor %}
+            </div>
+
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary">SEND</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
